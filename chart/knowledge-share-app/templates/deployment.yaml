@@ -24,8 +24,11 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         livenessProbe:
           httpGet:
-            path: /health
+            path: /actuator/health
             port: {{ .Values.service.servicePort }}
+          httpHeaders:
+          - name: Content-Type
+            value: application/json
           initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds}}
           periodSeconds: {{ .Values.livenessProbe.periodSeconds}}
         ports:
