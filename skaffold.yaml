@@ -2,7 +2,7 @@ apiVersion: skaffold/v1beta3
 kind: Config
 build:
   artifacts:
-  - image: knowledge-app
+  - image: knowledge-share-app
     context: .
     docker: {}
   tagPolicy:
