@@ -1,0 +1,5 @@
+apiVersion: v1
+description: Sample app for flywheel sprint 8
+icon: https://www.gravatar.com/userimage/76010/21eb5b476821450e977b10d195212c1b?size=60
+name: knowledge-share-app
+version: 0.1.0-SNAPSHOT
