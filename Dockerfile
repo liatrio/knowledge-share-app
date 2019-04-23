@@ -9,5 +9,5 @@ RUN mvn clean package
 
 FROM java:jre-alpine
 WORKDIR /home/project
-COPY --from=builder /home/project/target/knowledge-share-app .
+COPY --from=builder /home/project/target/knowledge-share-app.jar .
 ENTRYPOINT java -jar /home/project/knowledge-share-app.jar
