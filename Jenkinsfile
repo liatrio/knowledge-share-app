@@ -13,11 +13,6 @@ pipeline {
                 sonarScan()
             }
         }
-        stage("Functional Test") {
-            steps {
-                functionalTest()
-            }
-        }
     }
 }
 
