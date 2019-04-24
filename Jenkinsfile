@@ -13,11 +13,9 @@ pipeline {
                 sonarScan()
             }
         }
-        stage("functional test") {
+        stage("Functional Test") {
             steps {
-                container('maven') {
-                    sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
-                }
+                functionalTest()
             }
         }
     }
@@ -37,3 +35,8 @@ def sonarScan() {
     }
 }
 
+def functionalTest(){
+    container('maven') {
+        sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
+    }
+}

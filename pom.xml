@@ -160,8 +160,6 @@
         </activation>
         <properties>
           <sonar.host.url>http://sonarqube.liatr.io</sonar.host.url>
-          <sonar.login>sonarUser</sonar.login>
-          <sonar.password>sonarPass</sonar.password>
           <sonar.junit.reportPaths>target/surefire-reports/</sonar.junit.reportPaths>
           <sonar.coverage.jacoco.xmlReportPaths></sonar.coverage.jacoco.xmlReportPaths>
         </properties>
