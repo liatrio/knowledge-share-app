@@ -11,6 +11,9 @@ image:
 livenessProbe:
   initialDelaySeconds: 15
   periodSeconds: 5
+readinessProbe:
+  initialDelaySeconds: 15
+  periodSeconds: 5
 service:
   type: NodePort
   name: knowledge-share-app
