@@ -24,12 +24,16 @@ pipeline {
 }
 
 def mavenBuild() {
-    sh "mvn clean install"
+    container('maven') {
+        sh "mvn clean install"
+    }
 }
 
 def sonarScan() {
-    withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqubeToken')]) {
-        sh "mvn sonar:sonar -Dsonar.login=${sonarqubeToken}"
+    container('maven') {
+        withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqubeToken')]) {
+            sh "mvn sonar:sonar -Dsonar.login=${sonarqubeToken}"
+        }
     }
 }
 
