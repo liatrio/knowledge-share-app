@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label "jx-base"
+        label "jenkins-jx-base"
     }
     stages {
         stage('Build') {
@@ -12,7 +12,7 @@ pipeline {
 }
 
 def skaffoldBuild() {
-    container('js-base') {
+    container('jx-base') {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqubeToken')]) {
             sh "echo 'sonar.login=${sonarqubeToken}' >> sonar.properties"
             sh "skaffold build"
