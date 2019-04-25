@@ -1,4 +1,4 @@
-FROM maven:3-jdk-11 as builder
+FROM maven:3-jdk-8 as builder
 EXPOSE 8080
 
 USER root
