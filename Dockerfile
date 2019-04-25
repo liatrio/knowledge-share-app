@@ -11,8 +11,7 @@ RUN mvn dependency:resolve dependency:resolve-plugins
 
 # Copy in the src and build
 COPY . /home/project
-ARG SONAR_LOGIN
-RUN mvn clean package -Dsonar.login=${SONAR_LOGIN}
+RUN mvn clean package
 
 FROM java:jre-alpine
 WORKDIR /home/project

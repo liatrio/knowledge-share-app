@@ -1,31 +1,21 @@
 pipeline {
     agent {
-        label "jenkins-maven-java11"
+        label "jx-base"
     }
     stages {
         stage('Build') {
             steps {
-                mavenBuild()
-            }
-        }
-        stage('Sonar Scan') {
-            steps {
-                sonarScan()
+                skaffoldBuild()
             }
         }
     }
 }
 
-def mavenBuild() {
-    container('maven') {
-        sh "mvn clean install"
-    }
-}
-
-def sonarScan() {
-    container('maven') {
+def skaffoldBuild() {
+    container('js-base') {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqubeToken')]) {
-            sh "mvn sonar:sonar -Dsonar.login=${sonarqubeToken}"
+            sh "echo 'sonar.login=${sonarqubeToken}' >> sonar.properties"
+            sh "skaffold build"
         }
     }
 }
