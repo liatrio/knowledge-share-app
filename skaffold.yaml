@@ -9,7 +9,7 @@ build:
     gitCommit: {}
   local: {}
 profiles:
-  - name: build
+  - name: jenkins
     build:
       artifacts:
         - image: knowledge-share-app
@@ -17,6 +17,6 @@ profiles:
           docker: {}
       tagPolicy:
         envTemplate:
-          template: "{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}:{{ .VERSION }}"
+          template: "{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}:{{ .GIT_COMMIT }}"
       local:
         push: true

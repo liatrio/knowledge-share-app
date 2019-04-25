@@ -2,6 +2,9 @@ pipeline {
     agent {
         label "jenkins-jx-base"
     }
+    environment {
+      DOCKER_REGISTRY = 'docker.artifactory.liatr.io'
+    }
     stages {
         stage('Build') {
             steps {
@@ -15,7 +18,9 @@ def skaffoldBuild() {
     container('jx-base') {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqubeToken')]) {
             sh "echo 'sonar.login=${sonarqubeToken}' >> sonar.properties"
-            sh "skaffold build"
+        }
+        docker.withRegistry("https://${DOCKER_REGISTRY}", 'artifactory-credentials') {
+            sh "skaffold build -p jenkins"
         }
     }
 }
