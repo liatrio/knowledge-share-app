@@ -12,11 +12,10 @@ profiles:
   - name: build
     build:
       artifacts:
-        - image: knowledge-share-app
+        - image: "{{ .DOCKER_REGISTRY }}/liatrio/knowledge-share-app"
           context: .
           docker: {}
       tagPolicy:
-        envTemplate:
-          template: "{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}:{{ .GIT_COMMIT[0..10] }}"
+        gitCommit: {}
       local:
         push: true
