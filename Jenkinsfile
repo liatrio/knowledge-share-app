@@ -20,7 +20,7 @@ def skaffoldBuild() {
             sh "echo 'sonar.login=${sonarqubeToken}' >> sonar.properties"
         }
         docker.withRegistry("https://${DOCKER_REGISTRY}", 'artifactory-credentials') {
-            sh "skaffold build -p jenkins"
+            sh "skaffold build -p build"
         }
     }
 }
