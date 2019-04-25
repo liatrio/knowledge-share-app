@@ -35,7 +35,7 @@ def mavenParsePom() {
   }
 }
 
-def sendBuildEvent() {
+def sendBuildEvent(requestParams) {
   requestParams.teamName = env.TEAM_NAME ? env.TEAM_NAME : env.ORG
   requestParams.appName = env.APP_NAME
   requestParams.branch = env.BRANCH_NAME
