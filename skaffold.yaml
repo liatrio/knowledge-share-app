@@ -10,6 +10,8 @@ build:
   local: {}
 profiles:
   - name: build
+    activation:
+      - env: GIT_COMMIT
     build:
       artifacts:
         - image: knowledge-share-app
