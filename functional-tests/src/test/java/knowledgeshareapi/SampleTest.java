@@ -1,4 +1,4 @@
-package sampleappapi;
+package knowledgeshareapi;
 
 import com.intuit.karate.junit4.Karate;
 import org.junit.runner.RunWith;
