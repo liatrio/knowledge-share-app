@@ -4,6 +4,8 @@ pipeline {
     }
     environment {
       DOCKER_REGISTRY = 'docker.artifactory.liatr.io'
+      IMAGE_NAME = 'knowledge-share-app'
+      VERSION = '0.2.0'
     }
     stages {
         stage('Build') {
@@ -13,7 +15,8 @@ pipeline {
         }
         stage('Sonar Scan') {
             steps {
-                sonarScan()
+               // sonarScan()
+               echo 'skipping temp'
             }
         }
         stage('Publish Artifactory') {
