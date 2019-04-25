@@ -11,6 +11,7 @@ pipeline {
         stage('Build') {
             steps {
                 //skaffoldBuild()
+                echo 'skipping for now'
             }
         }
         stage ('Send Build Event') {
