@@ -17,6 +17,6 @@ profiles:
           docker: {}
       tagPolicy:
         envTemplate:
-          template: "docker.artifactory.liatr.io/liatrio/{{ .IMAGE_NAME }}:{{ .GIT_COMMIT }}"
+          template: "{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}:{{ .GIT_COMMIT }}"
       local:
         push: true
