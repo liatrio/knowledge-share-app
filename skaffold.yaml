@@ -17,13 +17,16 @@ deploy:
         image.repository: "knowledge-share-app"
         image.tag: "latest"
 profiles:
-  - name: stage
+  - name: build
     build:
       artifacts:
         - image: knowledge-share-app
           context: .
           docker: {}
       tagPolicy:
-        gitCommit: {}
-      local: {}
-   
+        envTemplate:
+            template: "{{ .DOCKER_REGISTRY }}/artifactory/{{ .IMAGE_NAME }}:{{ .GIT_COMMIT }}"
+      local:
+        push: true
+    deploy: {}
+
