@@ -23,6 +23,8 @@ pipeline {
     }
 }
 
+import groovy.json.JsonOutput
+
 def mavenParsePom() {
   container('maven') {
     script {
