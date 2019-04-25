@@ -4,7 +4,9 @@ build:
   artifacts:
   - image: knowledge-share-app
     context: .
-    docker: {}
+    docker: 
+      buildArgs:
+        SONAR_LOGIN: ""
   tagPolicy:
     gitCommit: {}
   local: {}
