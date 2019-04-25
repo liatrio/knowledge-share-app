@@ -8,9 +8,10 @@ pipeline {
       VERSION = '0.2.0'
     }
     stages {
-        stage('Build') {
+        stage('Build and Publish Image') {
             steps {
-                mavenBuild()
+                //mavenBuild()
+                echo 'skipping temp'
             }
         }
         stage('Sonar Scan') {
