@@ -46,7 +46,7 @@ def functionalTest(){
 
 def publishArtifactory() {
   container('maven') {
-    docker.withRegistry("https://${DOCKER_REGISTRY}", 'artifactory-creds') {
+    docker.withRegistry("https://${DOCKER_REGISTRY}", 'artifactory-credentials') {
         sh "skaffold build -p build"
     }
   }
