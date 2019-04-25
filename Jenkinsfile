@@ -15,7 +15,7 @@ def skaffoldBuild() {
     container('jx-base') {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqubeToken')]) {
             sh "echo 'sonar.login=${sonarqubeToken}' >> sonar.properties"
-            sh "skaffold build"
+            sh "skaffold build -p jenkins"
         }
     }
 }

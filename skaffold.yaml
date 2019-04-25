@@ -1,4 +1,4 @@
-apiVersion: skaffold/v1beta3
+apiVersion: skaffold/v1beta8
 kind: Config
 build:
   artifacts:
@@ -9,9 +9,7 @@ build:
     gitCommit: {}
   local: {}
 profiles:
-  - name: build
-    activation:
-      - env: GIT_COMMIT
+  - name: jenkins
     build:
       artifacts:
         - image: knowledge-share-app
