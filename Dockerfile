@@ -11,7 +11,7 @@ RUN mvn dependency:resolve dependency:resolve-plugins
 
 # Copy in the src and build
 COPY . /home/project
-RUN mvn clean package
+RUN mvn clean package -B
 
 FROM java:jre-alpine
 WORKDIR /home/project
