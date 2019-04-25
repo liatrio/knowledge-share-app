@@ -8,3 +8,15 @@ build:
   tagPolicy:
     gitCommit: {}
   local: {}
+profiles:
+  - name: build
+    build:
+      artifacts:
+        - image: knowledge-share-app
+          context: .
+          docker: {}
+      tagPolicy:
+        envTemplate:
+          template: "{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}:{{ .VERSION }}"
+      local:
+        push: true
