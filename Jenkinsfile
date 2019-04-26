@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                //skaffoldBuild()
+                skaffoldBuild()
                 mavenParsePom()
                 sendBuildEvent(eventType:'build')
             }
