@@ -15,9 +15,9 @@ deploy:
       chartPath: charts/knowledge-share-app
       setValueTemplates:
         image.repository: "knowledge-share-app"
-        image.tag: "latest"
+        image.tag: "{{ .GIT_COMMIT }}"
 profiles:
-  - name: build
+  - name: jenkins
     build:
       artifacts:
         - image: knowledge-share-app
@@ -25,7 +25,7 @@ profiles:
           docker: {}
       tagPolicy:
         envTemplate:
-            template: "{{ .DOCKER_REGISTRY }}/artifactory/{{ .IMAGE_NAME }}:{{ .GIT_COMMIT }}"
+            template: "{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}:{{ .GIT_COMMIT }}"
       local:
         push: true
     deploy: {}
