@@ -11,16 +11,46 @@ pipeline {
         stage('Build') {
             steps {
                 //skaffoldBuild()
-                echo 'skipping for now'
-            }
-        }
-        stage ('Send Build Event') {
-            steps {
                 mavenParsePom()
                 sendBuildEvent(eventType:'build')
             }
         }
+        stage ('Deploy to Staging') {
+            steps {
+              echo 'Need to add deploy to stagin env here'
+              sendBuildEvent(eventType:'deploy')
+            }
+        }
+        stage ('Test Staging Deployment') {
+            steps {
+              echo 'Temp testing stage here'
+              sendBuildEvent(eventType:'test')
+            }
+        }
+        stage ('Deploy to Production') {
+            steps {
+              echo 'Need to add deploy to production env here'
+              sendBuildEvent(eventType:'deploy')
+            }
+        }
+        stage ('Test Prod Deployment') {
+            steps {
+              echo 'Temp testing stage here'
+              sendBuildEvent(eventType:'test')
+            }
+        }
     }
+    post {
+        always {
+            cleanWs()
+        }
+        fixed {
+            sendHealthyEvent()
+        }
+        regression {
+            sendUnhealthyEvent()
+        }
+    }    
 }
 
 import groovy.json.JsonOutput
@@ -69,4 +99,48 @@ def functionalTest(){
     container('maven') {
         sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
     }
+}
+
+def sendHealthyEventy() {
+  def call(String unit = "MILLISECONDS") {
+    def divisor = ["HOURS": 360000, "MINUTES": 60000, "SECONDS": 1000 , "MILLISECONDS": 1]
+    long completedTimeStamp = currentBuild.getTimeInMillis()
+    long prevTimeStamp = getTimeOfFailedBuild(currentBuild)
+    recoveryTime = completedTimeStamp - prevTimeStamp
+    sendBuildEvent(eventType:'state-change', state: 'healthy', priorDuration: recoveryTime  )
+    return (completedTimeStamp - prevTimeStamp) / divisor[unit]
+  }
+
+  @NonCPS
+  long getTimeOfFailedBuild(currentBuild) {
+    def build = currentBuild //current build is fixed
+
+    while(build.getNumber() > 1 && build.getPreviousBuild().getResult() != 'SUCCESS') {
+        build = build.getPreviousBuild()
+    }
+    println "build that failed first ${build.getNumber()}"
+    return build.getTimeInMillis()
+  }
+}
+
+def sendUnhealthyEvent() {
+  def call(String unit = "MILLISECONDS") {
+    def divisor = ["HOURS": 360000, "MINUTES": 60000, "SECONDS": 1000 , "MILLISECONDS": 1]
+    long completedTimeStamp = currentBuild.getTimeInMillis()
+    long prevTimeStamp = getTimeOfFailedBuild(currentBuild)
+    recoveryTime = completedTimeStamp - prevTimeStamp
+    echo "last failed build was: ${recoveryTime} ago "
+    sendBuildEvent(eventType:'state-change', state: 'unhealthy', priorDuration: recoveryTime  )
+    return recoveryTime / divisor[unit]
+  } 
+
+  @NonCPS
+  long getTimeOfFailedBuild(currentBuild) {
+    def build = currentBuild.getPreviousBuild() //start looking at previous build
+    while(build.getNumber() > 1 && build.getResult() != 'FAILURE') {
+        build = build.getPreviousBuild()
+    }
+    println "Last failed build was ${build.getNumber()}"
+    return build.getTimeInMillis()
+  }
 }
