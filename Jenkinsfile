@@ -31,7 +31,6 @@ pipeline {
             steps {
               echo 'Need to add deploy to production env here'
               sendBuildEvent(eventType:'deploy')
-              echo break stuff
             }
         }
         stage ('Test Prod Deployment') {
