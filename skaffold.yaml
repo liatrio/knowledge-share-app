@@ -3,26 +3,20 @@ kind: Config
 build:
   artifacts:
   - image: knowledge-share-app
-    context: .
-    docker: {}
   tagPolicy:
-    gitCommit: {}
-  local: {}
+    sha256: {}
 deploy:
   helm:
     releases:
     - name: knowledge-share-app
       chartPath: charts/knowledge-share-app
-      setValueTemplates:
-        image.repository: "knowledge-share-app"
-        image.tag: "{{ .GIT_COMMIT }}"
+      values:
+        image: knowledge-share-app
 profiles:
   - name: jenkins
     build:
       artifacts:
         - image: knowledge-share-app
-          context: .
-          docker: {}
       tagPolicy:
         envTemplate:
             template: "{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}:{{ .GIT_COMMIT }}"
