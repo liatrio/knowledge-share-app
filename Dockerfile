@@ -13,7 +13,7 @@ RUN mvn dependency:resolve dependency:resolve-plugins -B
 COPY src ./src
 RUN mvn clean package -B
 
-FROM openjdk:8-jre-stretch
+FROM openjdk:8-jre-alpine
 WORKDIR /app
 
 COPY --from=builder /app/target/knowledge-share-app.jar .
