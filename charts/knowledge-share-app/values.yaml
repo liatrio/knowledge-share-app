@@ -1,13 +1,13 @@
 replicaCount: 1
 revisionHistoryLimit: 1
-image:
-  repository: knowledge-share-app
-  tag: latest
-  pullPolicy: IfNotPresent
-  resources:
-    requests:
-      cpu: 200m
-      memory: 300Mi
+
+image: knowledge-share-app:latest
+pullPolicy: IfNotPresent
+resources:
+  requests:
+    cpu: 200m
+    memory: 300Mi
+
 livenessProbe:
   initialDelaySeconds: 15
   periodSeconds: 5
