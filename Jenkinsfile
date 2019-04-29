@@ -6,6 +6,7 @@ pipeline {
       SKAFFOLD_DEFAULT_REPO = 'docker.artifactory.liatr.io/liatrio'
       TEAM_NAME = 'flywheel'
       ORG = 'liatrio'
+      GIT_COMMIT_SHORT = env.GIT_COMMIT.take(7)
     }
     stages {
         stage('Build') {
@@ -24,7 +25,7 @@ pipeline {
                     }
 
                     // Run Anchore for image scanning
-                    sh "echo \"$SKAFFOLD_DEFAULT_REPO/knowledge-share-app:${GIT_COMMIT:0:7} ${WORKSPACE}/Dockerfile\"  > anchore_images"
+                    sh "echo \"$SKAFFOLD_DEFAULT_REPO/knowledge-share-app:${GIT_COMMIT_SHORT} ${WORKSPACE}/Dockerfile\"  > anchore_images"
                     anchore name: 'anchore_images'
 
                 }
