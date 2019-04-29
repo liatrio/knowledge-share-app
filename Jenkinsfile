@@ -16,7 +16,7 @@ pipeline {
                     }
                     script {
                       docker.withRegistry("https://${SKAFFOLD_DEFAULT_REPO}", 'artifactory-credentials') {
-                          sh "skaffold build --skip-tests" 
+                          sh "skaffold build" 
                       }
                     }
                 }
