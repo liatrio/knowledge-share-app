@@ -3,14 +3,23 @@ pipeline {
         label "jenkins-jx-base"
     }
     environment {
-      DOCKER_REGISTRY = 'docker.artifactory.liatr.io'
+      SKAFFOLD_DEFAULT_REPO = 'docker.artifactory.liatr.io/liatrio'
       TEAM_NAME = 'flywheel'
       ORG = 'liatrio'
     }
     stages {
         stage('Build') {
             steps {
-                skaffoldBuild()
+                container('jx-base') {
+                    withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqubeToken')]) {
+                        sh "echo 'sonar.login=${sonarqubeToken}' >> sonar.properties"
+                    }
+                    docker.withRegistry("https://${SKAFFOLD_DEFAULT_REPO}", 'artifactory-credentials') {
+                        sh "skaffold build -p jenkins -q -o '{{ (index .Builds 0).Tag }}' > image_name"
+                    }
+                    sh 'curl -s https://ci-tools.anchore.io/inline_scan-v0.3.3 | bash -s -- -d Dockerfile $(< image_name)'
+                }
+
                 mavenParsePom()
                 sendBuildEvent(eventType:'build')
             }
@@ -83,17 +92,6 @@ def sendBuildEvent(requestParams) {
   println('Response: ' + response.content)
 }
 
-
-def skaffoldBuild() {
-    container('jx-base') {
-        withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqubeToken')]) {
-            sh "echo 'sonar.login=${sonarqubeToken}' >> sonar.properties"
-        }
-        docker.withRegistry("https://${DOCKER_REGISTRY}", 'artifactory-credentials') {
-            sh "skaffold build -p jenkins"
-        }
-    }
-}
 
 def functionalTest(){
     container('maven') {

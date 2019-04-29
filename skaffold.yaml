@@ -18,8 +18,7 @@ profiles:
       artifacts:
         - image: knowledge-share-app
       tagPolicy:
-        envTemplate:
-            template: "{{ .DOCKER_REGISTRY }}/liatrio/{{ .IMAGE_NAME }}:{{ .GIT_COMMIT }}"
+        gitCommit: {}
       local:
         push: true
     deploy: {}
