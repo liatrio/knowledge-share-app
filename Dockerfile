@@ -7,7 +7,7 @@ WORKDIR /app
 
 # Keep maven dependencies in separate image layer
 COPY pom.xml .
-RUN mvn dependency:resolve dependency:resolve-plugins
+RUN mvn dependency:resolve dependency:resolve-plugins -B
 
 # Copy in the src and build
 COPY src ./src
