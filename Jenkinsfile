@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label "jenkins-jx-base"
+        label "build-image-skaffold"
     }
     environment {
       SKAFFOLD_DEFAULT_REPO = 'docker.artifactory.liatr.io/liatrio'
@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                container('jx-base') {
+                container('skaffold') {
                     withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqubeToken')]) {
                         sh "echo 'sonar.login=${sonarqubeToken}' >> sonar.properties"
                     }
