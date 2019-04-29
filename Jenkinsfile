@@ -11,25 +11,25 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                container('skaffold') {
-                    // Create sonar.properties for sonar maven plugin
-                    withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqubeToken')]) {
-                        sh "echo 'sonar.login=${sonarqubeToken}' >> sonar.properties"
-                    }
-
-                    // Create and test image with skaffold
-                    script {
-                      docker.withRegistry("https://${SKAFFOLD_DEFAULT_REPO}", 'artifactory-credentials') {
-                          sh "skaffold build"
-                      }
-                    }
-
-                    // Run Anchore for image scanning
-                    sh "echo \"$SKAFFOLD_DEFAULT_REPO/knowledge-share-app:${GIT_COMMIT_SHORT} ${WORKSPACE}/Dockerfile\"  > anchore_images"
-                    anchore name: 'anchore_images'
-
+                // Create sonar.properties for sonar maven plugin
+                withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqubeToken')]) {
+                  sh "echo 'sonar.login=${sonarqubeToken}' >> sonar.properties"
                 }
 
+                // Create and test image with skaffold
+                container('skaffold') {
+                  script {
+                    docker.withRegistry("https://${SKAFFOLD_DEFAULT_REPO}", 'artifactory-credentials') {
+                      sh "skaffold build"
+                    }
+                  }
+                }
+
+                // Run Anchore for image scanning
+                sh "echo \"$SKAFFOLD_DEFAULT_REPO/knowledge-share-app:${GIT_COMMIT_SHORT} ${WORKSPACE}/Dockerfile\"  > anchore_images"
+                anchore name: 'anchore_images'
+
+                // send build event for dashboard
                 mavenParsePom()
                 sendBuildEvent(eventType:'build')
             }
