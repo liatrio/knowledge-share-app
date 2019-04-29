@@ -1,0 +1,16 @@
+schemaVersion: "2.0.0"
+        
+commandTests:
+  - name: "java exists"
+    command: "java"
+    args: ["-version"]
+    expectedError: ["OpenJDK Runtime Environment","1.8.0_212"]
+    exitCode: 0
+fileExistenceTests:
+  - name: 'knowledge-share-app.jar'
+    path: '/app/knowledge-share-app.jar'
+    shouldExist: true
+metadataTest:
+  exposedPorts: ["8080"]
+  entrypoint: ["java","-jar","knowledge-share-app.jar"]
+  workdir: "/app"

@@ -42,14 +42,14 @@ public class HelloControllerTest {
         this.mockMvc.perform(get("/hello"))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(content().string("Hello World!!!!"));
+            .andExpect(content().string("Hello World!"));
     }
 
     @Test
     public void helloTest() throws Exception {
         HelloController hc = new HelloController();
         String test = hc.hello();
-        assertEquals("Hello World!!!!", test);
+        assertEquals("Hello World!", test);
     }
 
 }

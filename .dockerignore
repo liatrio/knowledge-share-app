@@ -1,2 +1,6 @@
 skaffold.yaml
 Jenkinsfile
+image-tests/
+target/
+Dockerfile
+.dockerignore

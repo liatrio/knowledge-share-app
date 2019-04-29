@@ -2,24 +2,15 @@ apiVersion: skaffold/v1beta3
 kind: Config
 build:
   artifacts:
+    - image: knowledge-share-app
+test:
   - image: knowledge-share-app
-  tagPolicy:
-    sha256: {}
+    structureTests:
+      - ./image-tests/*
 deploy:
   helm:
     releases:
-    - name: knowledge-share-app
-      chartPath: charts/knowledge-share-app
-      values:
-        image: knowledge-share-app
-profiles:
-  - name: jenkins
-    build:
-      artifacts:
-        - image: knowledge-share-app
-      tagPolicy:
-        gitCommit: {}
-      local:
-        push: true
-    deploy: {}
-
+      - name: knowledge-share-app
+        chartPath: charts/knowledge-share-app
+        values:
+          image: knowledge-share-app
