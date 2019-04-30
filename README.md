@@ -1,7 +1,5 @@
 # Knowledge Share App
 
-Build `mvn clean package`
+This application demonstrates a continuous delivery pipeline on Jenkins.  The workflow necessary to build, test, package and publish the docker image is defined through [Skaffold](https://skaffold.dev/)
 
-Run `mvn spring-boot:run`
-
-API for build info: `http://localhost:8080/actuator/info`
+To run the application locally, run `skaffold dev`

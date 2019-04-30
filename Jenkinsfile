@@ -25,14 +25,15 @@ pipeline {
                   }
                 }
 
-                // Run Anchore for image scanning
-                sh "echo \"$SKAFFOLD_DEFAULT_REPO/knowledge-share-app:${GIT_COMMIT_SHORT} ${WORKSPACE}/Dockerfile\"  > anchore_images"
-                anchore name: 'anchore_images'
-
                 // send build event for dashboard
                 mavenParsePom()
                 sendBuildEvent(eventType:'build')
             }
+        }
+        stage('Image Scan') {
+            // Run Anchore for image scanning
+            sh "echo \"$SKAFFOLD_DEFAULT_REPO/knowledge-share-app:${GIT_COMMIT_SHORT} ${WORKSPACE}/Dockerfile\"  > anchore_images"
+            anchore name: 'anchore_images'
         }
         stage ('Deploy to Staging') {
             steps {
