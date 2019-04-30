@@ -34,7 +34,7 @@ pipeline {
             steps {
               // Run Anchore for image scanning
               sh "echo \"$SKAFFOLD_DEFAULT_REPO/knowledge-share-app:${GIT_COMMIT_SHORT} ${WORKSPACE}/Dockerfile\"  > anchore_images"
-              anchore name: 'anchore_images'
+              anchore name: 'anchore_images', bailOnFail: false
             }
         }
         stage ('Deploy to Staging') {
