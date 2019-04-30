@@ -4,3 +4,4 @@ image-tests/
 target/
 Dockerfile
 .dockerignore
+*.swp
