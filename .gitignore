@@ -8,3 +8,5 @@ target/
 *.iml
 sonar.properties
 *.swp
+image-tests/
+functional-tests/
