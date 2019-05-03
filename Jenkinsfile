@@ -7,15 +7,13 @@ pipeline {
       TEAM_NAME = 'flywheel'
       ORG = 'liatrio'
       GIT_COMMIT_SHORT = env.GIT_COMMIT.take(7)
+      sonarqubeToken = credentials('sonarqube')
     }
     stages {
         stage('Build') {
             steps {
                 // Create sonar.properties for sonar maven plugin
-                withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqubeToken')]) {
-                  sh "echo 'sonar.login=${sonarqubeToken}' >> sonar.properties"
-                }
-
+                sh "echo 'sonar.login=${sonarqubeToken}' >> sonar.properties"
                 // Create and test image with skaffold
                 container('skaffold') {
                   script {
