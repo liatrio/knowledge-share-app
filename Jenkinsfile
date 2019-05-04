@@ -7,7 +7,7 @@ pipeline {
       TEAM_NAME = 'flywheel'
       ORG = 'liatrio'
       GIT_COMMIT_SHORT = env.GIT_COMMIT.take(7)
-      sonarqubeToken = credentials('sonarqube')
+      sonarqubeToken = credentials('jenkins-credential-sonarqube')
     }
     stages {
         stage('Build') {
@@ -17,7 +17,7 @@ pipeline {
                 // Create and test image with skaffold
                 container('skaffold') {
                   script {
-                    docker.withRegistry("https://${SKAFFOLD_DEFAULT_REPO}", 'artifactory-credentials') {
+                    docker.withRegistry("https://${SKAFFOLD_DEFAULT_REPO}", 'jenkins-credential-artifactory') {
                       sh "skaffold build"
                     }
                   }
