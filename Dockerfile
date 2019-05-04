@@ -11,7 +11,6 @@ RUN mvn dependency:resolve dependency:resolve-plugins -B
 
 # Copy in the src and build
 COPY . .
-RUN ls -l
 RUN mvn clean package -B
 
 FROM openjdk:8-jre-alpine
