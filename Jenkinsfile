@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label "builder-images"
+        label "lead-toolchain-skaffold"
     }
     environment {
       SKAFFOLD_DEFAULT_REPO = 'docker.artifactory.liatr.io/liatrio'
