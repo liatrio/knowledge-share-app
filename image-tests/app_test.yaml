@@ -4,7 +4,7 @@ commandTests:
   - name: "java exists"
     command: "java"
     args: ["-version"]
-    expectedError: ["OpenJDK Runtime Environment","1.8.0_201"]
+    expectedError: ["OpenJDK Runtime Environment","1\\.8\\.0_\\d+"]
     exitCode: 0
 fileExistenceTests:
   - name: 'knowledge-share-app.jar'
