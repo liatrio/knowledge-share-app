@@ -42,7 +42,7 @@ pipeline {
                 name             : knowledge-share-app,
                 chart_dir        : charts/knowledge-share-app,
                 namespace        : flywheel-staging,
-                tiller-namespace : flywheel-staging
+                tiller_namespace : flywheel-staging
               )
               sendBuildEvent(eventType:'test')
             }
