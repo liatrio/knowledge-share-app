@@ -135,17 +135,23 @@ def sendUnhealthyEvent(String unit = "MILLISECONDS") {
 
 def helmDeploy(requestParams) {
     //configure helm client and confirm tiller process is installed
+    def deploymentName = requestParams.name
+    def chartDirectory = requestParams.chart_dir
+    def deploymentNamespace = requestParams.namespace
+    def tillerNamespace = requestParams.tiller_namespace
+
 
     if (args.dry_run) {
         println "Running dry-run deployment"
 
-        sh "/usr/local/bin/helm upgrade --dry-run --debug --install requestParams.name requestParams.chart_dir --set --namespace=requestParams.namespace --tiller-namespace=requestParams.tiller_namespace"
+        sh "/usr/local/bin/helm upgrade --dry-run --debug --install ${deploymentName} ${chartDirectory} --set --namespace=${deploymentNamespace} --tiller-namespace=${tillerNamespace}"
     } else {
         println "Running deployment"
+
+        sh "/usr/local/bin/helm upgrade --install ${deploymentName} ${chartDirectory} --set --namespace=${deploymentNamespace} --tiller-namespace=${tillerNamespace}"
+
  
-         sh "/usr/local/bin/helm upgrade --install requestParams.name requestParams.chart_dir --set --namespace=requestParams.namespace --tiller-namespace=requestParams.tiller_namespace"
- 
-        echo "Application ${args.name} successfully deployed. Use helm status ${args.name} to check"
+        echo "Application ${deploymentName}  successfully deployed. Use helm status ${deploymentName} to check"
     }
 }
 
