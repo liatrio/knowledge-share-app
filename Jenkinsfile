@@ -38,7 +38,7 @@ pipeline {
             steps {
               container('skaffold') {
               echo 'Temp testing stage here'
-              helmDeploy(dry_run: 'true', name: 'knowledge-share-app', chart_dir: 'charts/knowledge-share-app', namespace: 'flywheel-staging', tiller_namespace : 'flywheel-staging') 
+              helmDeploy(dry_run: 'true', name: 'knowledge-share-app', chart_dir: 'charts/knowledge-share-app', namespace: 'chatops-dev-staging', tiller_namespace : 'chatops-dev-staging') 
               }
               //sendBuildEvent(eventType:'test')
             }
@@ -60,12 +60,12 @@ pipeline {
         always {
             cleanWs()
         }
-        fixed {
+        //fixed {
             //sendHealthyEvent()
-        }
-        regression {
+        //}
+        //regression {
             //sendUnhealthyEvent()
-        }
+        //}
     }    
 }
 
