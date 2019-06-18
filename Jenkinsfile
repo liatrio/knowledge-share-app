@@ -40,8 +40,8 @@ pipeline {
               helmDeploy(
                 dry_run          : true,
                 name             : knowledge-share-app,
-                chart_dir        : charts/knowledge-share-app
-                namespace        : flywheel-staging
+                chart_dir        : charts/knowledge-share-app,
+                namespace        : flywheel-staging,
                 tiller-namespace : flywheel-staging
               )
               sendBuildEvent(eventType:'test')
