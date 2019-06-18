@@ -143,8 +143,9 @@ def helmDeploy(requestParams) {
     def deploymentNamespace = requestParams.namespace
     def tillerNamespace = requestParams.tiller_namespace
 
+    echo "Dry run = ${dryRun}"
 
-    if (dryRun == 'true') {
+    if (dryRun == true) {
         println "Running dry-run deployment"
         
         sh "/usr/bin/helm init --service-account tiller"
