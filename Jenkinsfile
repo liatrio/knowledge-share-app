@@ -38,7 +38,7 @@ pipeline {
             steps {
               container('skaffold') {
               echo 'Temp testing stage here'
-              helmDeploy(dry_run: 'true', name: 'knowledge-share-app', chart_dir: 'charts/knowledge-share-app', namespace: 'chatops-dev-staging', tiller_namespace : 'chatops-dev-staging') 
+              helmDeploy(dry_run: 'false', name: 'knowledge-share-app', chart_dir: 'charts/knowledge-share-app', namespace: 'chatops-dev-staging', tiller_namespace : 'chatops-dev-staging') 
               }
               //sendBuildEvent(eventType:'test')
             }
