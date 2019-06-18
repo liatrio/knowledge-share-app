@@ -153,6 +153,7 @@ def helmDeploy(requestParams) {
     } else {
         println "Running deployment"
 
+        sh "/usr/bin/helm delete knowledge-share-app --purge"
         sh "/usr/bin/helm upgrade --install ${deploymentName} ${chartDirectory} --set --namespace=${deploymentNamespace} --tiller-namespace=${tillerNamespace}"
 
  
