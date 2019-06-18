@@ -25,13 +25,13 @@ pipeline {
 
                 // send build event for dashboard
                 mavenParsePom()
-                sendBuildEvent(eventType:'build')
+                //sendBuildEvent(eventType:'build')
             }
         }
         stage ('Deploy to Staging') {
             steps {
               echo 'Need to add deploy to stagin env here'
-              sendBuildEvent(eventType:'deploy')
+              //sendBuildEvent(eventType:'deploy')
             }
         }
         stage ('Test Staging Deployment') {
@@ -40,19 +40,19 @@ pipeline {
               echo 'Temp testing stage here'
               helmDeploy(dry_run: 'true', name: 'knowledge-share-app', chart_dir: 'charts/knowledge-share-app', namespace: 'flywheel-staging', tiller_namespace : 'flywheel-staging') 
               }
-              sendBuildEvent(eventType:'test')
+              //sendBuildEvent(eventType:'test')
             }
         }
         stage ('Deploy to Production') {
             steps {
               echo 'Need to add deploy to production env here'
-              sendBuildEvent(eventType:'deploy')
+              //sendBuildEvent(eventType:'deploy')
             }
         }
         stage ('Test Prod Deployment') {
             steps {
               echo 'Temp testing stage here'
-              sendBuildEvent(eventType:'test')
+              //sendBuildEvent(eventType:'test')
             }
         }
     }
@@ -61,10 +61,10 @@ pipeline {
             cleanWs()
         }
         fixed {
-            sendHealthyEvent()
+            //sendHealthyEvent()
         }
         regression {
-            sendUnhealthyEvent()
+            //sendUnhealthyEvent()
         }
     }    
 }
