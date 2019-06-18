@@ -37,13 +37,7 @@ pipeline {
         stage ('Test Staging Deployment') {
             steps {
               echo 'Temp testing stage here'
-              helmDeploy(
-                dry_run          : true,
-                name             : knowledge-share-app,
-                chart_dir        : charts/knowledge-share-app,
-                namespace        : flywheel-staging,
-                tiller_namespace : flywheel-staging
-              )
+              helmDeploy(dry_run: 'true', name: 'knowledge-share-app', chart_dir: 'charts/knowledge-share-app', namespace: 'flywheel-staging', tiller_namespace : 'flywheel-staging')
               sendBuildEvent(eventType:'test')
             }
         }
@@ -139,18 +133,18 @@ def sendUnhealthyEvent(String unit = "MILLISECONDS") {
     return recoveryTime / divisor[unit]
 }
 
-def helmDeploy(Map args) {
+def helmDeploy(requestParams) {
     //configure helm client and confirm tiller process is installed
 
     if (args.dry_run) {
         println "Running dry-run deployment"
 
-        sh "/usr/local/bin/helm upgrade --dry-run --debug --install ${args.name} ${args.chart_dir} --set --namespace=${args.namespace} --tiller-namespace=${tiller_namespace}"
+        sh "/usr/local/bin/helm upgrade --dry-run --debug --install requestParams.name requestParams.chart_dir --set --namespace=requestParams.namespace --tiller-namespace=requestParams.tiller_namespace"
     } else {
         println "Running deployment"
-  
-        sh "/usr/local/bin/helm upgrade --install ${args.name} ${args.chart_dir} --set --namespace=${args.namespace} --tiller-namespace=    ${tiller_namespace}"
-
+ 
+         sh "/usr/local/bin/helm upgrade --install requestParams.name requestParams.chart_dir --set --namespace=requestParams.namespace --tiller-namespace=requestParams.tiller_namespace"
+ 
         echo "Application ${args.name} successfully deployed. Use helm status ${args.name} to check"
     }
 }
