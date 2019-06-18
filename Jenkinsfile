@@ -148,13 +148,11 @@ def helmDeploy(requestParams) {
     if (dryRun == true) {
         println "Running dry-run deployment"
         
-        sh "/usr/bin/helm init --service-account tiller"
         sh "/usr/bin/helm upgrade --dry-run --debug --install ${deploymentName} ${chartDirectory} --set --namespace=${deploymentNamespace} --tiller-namespace=${tillerNamespace}"
+    
     } else {
         println "Running deployment"
 
-        sh "/usr/bin/helm init --service-account tiller"
-        sh "/usr/bin/helm upgrade --dry-run --debug --install ${deploymentName} ${chartDirectory} --set --namespace=${deploymentNamespace} --tiller-namespace=${tillerNamespace}"
         sh "/usr/bin/helm upgrade --install ${deploymentName} ${chartDirectory} --set --namespace=${deploymentNamespace} --tiller-namespace=${tillerNamespace}"
 
  
