@@ -14,5 +14,3 @@ deploy:
       chartPath: charts/knowledge-share-app
       values:
         image: knowledge-share-app
-    flags:
-      global: ["--tiller-namespace=jon-test-staging"] 
