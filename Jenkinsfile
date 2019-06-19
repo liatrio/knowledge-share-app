@@ -13,6 +13,9 @@ pipeline {
             }
         }
         stage ('Deploy to Staging') {
+            environment { 
+              TILLER_NAMESPACE = 'flywheel-staging'
+            }
             steps {
               container('skaffold') {
                 script {
