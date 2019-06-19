@@ -2,6 +2,7 @@ pipeline {
     agent {
         label "lead-toolchain-skaffold"
     }
+    podTemplate(serviceAccount: 'tiller')
     stages {
         stage('Build') {
             steps {
