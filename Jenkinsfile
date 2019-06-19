@@ -2,7 +2,6 @@ pipeline {
     agent {
         label "lead-toolchain-skaffold"
     }
-    podTemplate(serviceAccount: 'tiller')
     stages {
         stage('Build') {
             steps {
@@ -20,7 +19,6 @@ pipeline {
             steps {
               container('skaffold') {
                 script {
-                  sh "helm init --service-account tiller --tiller-namespace jon-test-toolchain"
                   sh "skaffold deploy"
                 }
               }
