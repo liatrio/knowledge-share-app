@@ -14,11 +14,12 @@ pipeline {
         }
         stage ('Deploy to Staging') {
             environment { 
-              TILLER_NAMESPACE = 'flywheel-staging'
+              TILLER_NAMESPACE = 'jon-test-staging'
             }
             steps {
               container('skaffold') {
                 script {
+                  sh "helm init --service-account tiller"
                   sh "skaffold deploy"
                 }
               }
