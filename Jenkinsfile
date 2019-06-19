@@ -19,7 +19,7 @@ pipeline {
             steps {
               container('skaffold') {
                 script {
-                  sh "helm init --service-account tiller"
+                  sh "helm init --service-account tiller --tiller-namespace jon-test-toolchain"
                   sh "skaffold deploy"
                 }
               }
