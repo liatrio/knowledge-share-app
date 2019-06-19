@@ -27,6 +27,7 @@ pipeline {
         stage ('Test Staging Deployment') {
             steps {
               container('maven') {
+                sh "helm init --tiller-namespace jon-test-staging"
                 sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
               }
             }
