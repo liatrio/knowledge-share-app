@@ -14,7 +14,7 @@ pipeline {
         }
         stage ('Deploy to Staging') {
             environment { 
-              TILLER_NAMESPACE = env.stagingNamespace
+              TILLER_NAMESPACE = "${env.stagingNamespace}"
             }
             steps {
               container('skaffold') {
@@ -33,7 +33,7 @@ pipeline {
         }
         stage ('Deploy to Production') {
            environment {
-             TILLER_NAMESPACE = env.productionNamespace
+             TILLER_NAMESPACE = "${env.productionNamespace}"
            }
             steps {
               container('skaffold') {
