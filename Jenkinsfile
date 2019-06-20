@@ -19,7 +19,7 @@ pipeline {
             steps {
               container('skaffold') {
                 script {
-                  sh "skaffold run -n jon-test-staging"
+                  sh "skaffold deploy -n jon-test-staging"
                 }
               }
             }
