@@ -19,7 +19,7 @@ pipeline {
             steps {
               container('skaffold') {
                 script {
-                  sh "skaffold deploy --namespace ${TILLER_NAMESPACE}"
+                  sh "skaffold deploy -namespace jon-test-staging"
                 }
               }
             }
