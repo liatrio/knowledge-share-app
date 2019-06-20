@@ -14,12 +14,12 @@ pipeline {
         }
         stage ('Deploy to Staging') {
             environment { 
-              SKAFFOLD_NAMESPACE = "${env.stagingNamespace}"
+              TILLER_NAMESPACE = "${env.stagingNamespace}"
             }
             steps {
               container('skaffold') {
                 script {
-                  sh "skaffold deploy"
+                  sh "skaffold deploy --namespace ${TILLER_NAMESPACE}"
                 }
               }
             }
@@ -33,7 +33,7 @@ pipeline {
         }
         stage ('Deploy to Production') {
            environment {
-             SKAFFOLD_NAMESPACE = "${env.productionNamespace}"
+             TILLER_NAMESPACE = "${env.productionNamespace}"
            }
             steps {
               container('skaffold') {
