@@ -14,7 +14,7 @@ pipeline {
         }
         stage ('Deploy to Staging') {
             environment { 
-              TILLER_NAMESPACE = 'jon-test-staging'
+              TILLER_NAMESPACE = env.stagingNamespace
             }
             steps {
               container('skaffold') {
@@ -27,14 +27,20 @@ pipeline {
         stage ('Test Staging Deployment') {
             steps {
               container('maven') {
-                sh "helm init --tiller-namespace jon-test-staging"
                 sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
               }
             }
         }
         stage ('Deploy to Production') {
+           environment {
+             TILLER_NAMESPACE = env.productionNamespace
+           }
             steps {
-              echo 'Need to add deploy to production env here'
+              container('skaffold') {
+                script {
+                  sh "skaffold deploy"
+                }
+              }
             }
         }
         stage ('Test Prod Deployment') {
