@@ -44,7 +44,7 @@ pipeline {
             steps {
               container('skaffold') {
                 script {
-              #    sh "skaffold deploy -a image.json -n ${TILLER_NAMESPACE}"
+                  sh "skaffold deploy -a image.json -n ${TILLER_NAMESPACE}"
                 }
               }
             }
