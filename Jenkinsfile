@@ -27,7 +27,8 @@ pipeline {
       }
       steps {
         container('maven') {
-          sh "mvn clean test -B -DappUrl=https://knowledge-share-app.${env.stagingDomain} -f functional-tests"
+          echo 'commented out stage'
+          //sh "mvn clean test -B -DappUrl=https://knowledge-share-app.${env.stagingDomain} -f functional-tests"
         }
       }
     }
@@ -41,7 +42,8 @@ pipeline {
       }
       steps {
         container('skaffold') {
-          sh "skaffold deploy -a image.json -n ${TILLER_NAMESPACE}"
+          echo 'commented out stage'
+          //sh "skaffold deploy -a image.json -n ${TILLER_NAMESPACE}"
         }
       }
     }
