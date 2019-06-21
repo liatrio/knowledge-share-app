@@ -21,7 +21,7 @@ pipeline {
             steps {
               container('skaffold') {
                 script {
-                  sh "helm upgrade knowledge-share-app charts/knowledge-share-app --tiller-namespace ${env.stagingNamespace} --namespace ${env.stagingNamespace} --set ingress.domain=${INGRESS_DOMAIN}"
+                  sh "helm upgrade -i knowledge-share-app charts/knowledge-share-app --tiller-namespace ${env.stagingNamespace} --namespace ${env.stagingNamespace} --set ingress.domain=${INGRESS_DOMAIN}"
                 }
               }
             }
