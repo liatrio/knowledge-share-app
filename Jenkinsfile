@@ -9,6 +9,7 @@ pipeline {
         container('skaffold') {
           sh "skaffold build --quiet > image.json"
         }
+        stash includes: 'image.json', name: 'image' 
       }
     }
     stage ('Deploy to Staging') {
@@ -20,6 +21,7 @@ pipeline {
         INGRESS_DOMAIN   = "${env.stagingDomain}"
       }
       steps {
+        unstash 'image'
         container('skaffold') {
           sh "skaffold deploy -a image.json -n ${TILLER_NAMESPACE}"
         }
@@ -50,6 +52,7 @@ pipeline {
         INGRESS_DOMAIN   = "${env.productionDomain}"
       }
       steps {
+        unstash 'image'
         container('skaffold') {
           sh "skaffold deploy -a image.json -n ${TILLER_NAMESPACE}"
         }
