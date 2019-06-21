@@ -13,11 +13,11 @@ spec:
 {{- if .Values.ingress.tls.enabled }}
   tls:
     - hosts:
-      - '{{- .Chart.Name }}.{{- .Values.ingress.domain }}'
+      - '{{- .Chart.Name }}.{{- required "ingress.domain is required!" .Values.ingress.domain }}'
       secretName: '{{- .Values.ingress.tls.secretName }}'
 {{- end }}
   rules:
-    - host: '{{- .Chart.Name }}.{{- .Values.ingress.domain }}'
+    - host: '{{- .Chart.Name }}.{{- required "ingress.domain is required!" .Values.ingress.domain }}'
       http:
         paths:
           - path: '/'

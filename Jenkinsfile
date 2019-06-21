@@ -22,7 +22,6 @@ pipeline {
               container('skaffold') {
                 script {
                   sh "skaffold deploy -a image.json -n ${TILLER_NAMESPACE}"
-              //    sh "helm upgrade -i knowledge-share-app charts/knowledge-share-app --tiller-namespace ${env.stagingNamespace} --namespace ${env.stagingNamespace} --set ingress.domain=${INGRESS_DOMAIN}"
                 }
               }
             }
