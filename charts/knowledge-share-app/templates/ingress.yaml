@@ -10,26 +10,18 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-{{- if .Values.ingress.tls }}
+{{- if .Values.ingress.tls.enabled }}
   tls:
-  {{- range .Values.ingress.tls }}
     - hosts:
-      {{- range .hosts }}
-        - {{ . | quote }}
-      {{- end }}
-      secretName: {{ .secretName }}
-  {{- end }}
+      - '{{- .Chart.Name }}.{{- required "ingress.domain is required!" .Values.ingress.domain }}'
+      secretName: '{{- .Values.ingress.tls.secretName }}'
 {{- end }}
   rules:
-  {{- range .Values.ingress.hosts }}
-    - host: {{ . | quote }}
+    - host: '{{- .Chart.Name }}.{{- required "ingress.domain is required!" .Values.ingress.domain }}'
       http:
         paths:
-  {{- range .Values.ingress.paths }}
-          - path: {{ . }}
+          - path: '/'
             backend:
               serviceName: {{ .Values.service.name }}
               servicePort: http
-  {{- end }}
-  {{- end }}
 {{- end }}

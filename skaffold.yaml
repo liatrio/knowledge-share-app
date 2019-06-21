@@ -1,16 +1,19 @@
-apiVersion: skaffold/v1beta3
+apiVersion: skaffold/v1beta11
 kind: Config
 build:
   artifacts:
-    - image: knowledge-share-app
-test:
   - image: knowledge-share-app
-    structureTests:
-      - ./image-tests/*
+test:
+- image: knowledge-share-app
+  structureTests:
+  - ./image-tests/*
 deploy:
   helm:
     releases:
-      - name: knowledge-share-app
-        chartPath: charts/knowledge-share-app
-        values:
-          image: knowledge-share-app
+    - name: knowledge-share-app
+      chartPath: charts/knowledge-share-app
+      wait: true
+      values:
+        image: knowledge-share-app
+      setValueTemplates:
+        ingress.domain: "{{if .INGRESS_DOMAIN}}{{.INGRESS_DOMAIN}}{{else}}local{{end}}"

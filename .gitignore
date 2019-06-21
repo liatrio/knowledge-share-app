@@ -10,3 +10,4 @@ sonar.properties
 *.swp
 image-tests/
 functional-tests/
+image.json
