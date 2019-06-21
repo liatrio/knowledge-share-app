@@ -36,6 +36,7 @@ pipeline {
       }
     }
     stage ('Approval') {
+      agent none
       when {
           branch 'master'
       }
