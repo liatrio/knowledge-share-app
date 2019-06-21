@@ -17,4 +17,4 @@ deploy:
       setValueTemplates: 
         ingress.domain: "{{.INGRESS_DOMAIN}}" 
     flags:
-      global: ["--debug"]
+      upgrade: ["--force=false"]
