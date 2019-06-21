@@ -16,5 +16,3 @@ deploy:
         image: knowledge-share-app
       setValueTemplates: 
         ingress.domain: "{{.INGRESS_DOMAIN}}" 
-    flags:
-      upgrade: ["--force=false"]
