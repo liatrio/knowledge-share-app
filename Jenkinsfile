@@ -1,9 +1,10 @@
 pipeline {
-  agent {
-    label "lead-toolchain-skaffold"
-  }
+  agent none
   stages {
     stage('Build') {
+      agent {
+        label "lead-toolchain-skaffold"
+      }
       steps {
         container('skaffold') {
           sh "skaffold build --quiet > image.json"
@@ -11,6 +12,9 @@ pipeline {
       }
     }
     stage ('Deploy to Staging') {
+      agent {
+        label "lead-toolchain-skaffold"
+      }
       environment { 
         TILLER_NAMESPACE = "${env.stagingNamespace}"
         INGRESS_DOMAIN   = "${env.stagingDomain}"
@@ -43,6 +47,9 @@ pipeline {
       when {
           branch 'master'
       }
+      agent {
+        label "lead-toolchain-skaffold"
+      }
       environment {
         TILLER_NAMESPACE = "${env.productionNamespace}"
         INGRESS_DOMAIN   = "${env.productionDomain}"
@@ -54,9 +61,4 @@ pipeline {
       }
     }
   }
-  post {
-    always {
-      cleanWs()
-    }
-  }    
 }
