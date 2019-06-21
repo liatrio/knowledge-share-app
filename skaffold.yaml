@@ -12,6 +12,7 @@ deploy:
     releases:
     - name: knowledge-share-app
       chartPath: charts/knowledge-share-app
+      wait: true
       values:
         image: knowledge-share-app
       setValueTemplates:

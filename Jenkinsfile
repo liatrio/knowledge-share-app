@@ -36,10 +36,14 @@ pipeline {
             }
         }
         stage ('Deploy to Production') {
-           environment {
-             TILLER_NAMESPACE = "${env.productionNamespace}"
-             INGRESS_DOMAIN   = "${env.productionDomain}"
-           }
+            when {
+                branch 'master'
+            }
+            input "Deploy to production?"
+            environment {
+              TILLER_NAMESPACE = "${env.productionNamespace}"
+              INGRESS_DOMAIN   = "${env.productionDomain}"
+            }
             steps {
               container('skaffold') {
                 script {
