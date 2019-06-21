@@ -15,8 +15,8 @@ pipeline {
         stage ('Deploy to Staging') {
             environment { 
               TILLER_NAMESPACE = "${env.stagingNamespace}"
-              //INGRESS_DOMAIN = "${env.stagingDomain}"
-              INGRESS_DOMAIN = "${env.stagingNamespace}.lead.sandbox.liatr.io"
+              INGRESS_DOMAIN = "${env.stagingDomain}"
+              //INGRESS_DOMAIN = "${env.stagingNamespace}.lead.sandbox.liatr.io"
             }
             steps {
               container('skaffold') {
@@ -37,8 +37,8 @@ pipeline {
         stage ('Deploy to Production') {
            environment {
              TILLER_NAMESPACE = "${env.productionNamespace}"
-              //INGRESS_DOMAIN = "${env.productionDomain}"
-             INGRESS_DOMAIN = "${env.productionNamespace}.lead.sandbox.liatr.io"
+             INGRESS_DOMAIN = "${env.productionDomain}"
+             //INGRESS_DOMAIN = "${env.productionNamespace}.lead.sandbox.liatr.io"
            }
             steps {
               container('skaffold') {
