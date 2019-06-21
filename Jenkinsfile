@@ -15,8 +15,7 @@ pipeline {
         stage ('Deploy to Staging') {
             environment { 
               TILLER_NAMESPACE = "${env.stagingNamespace}"
-              INGRESS_DOMAIN = "${env.stagingDomain}"
-              //INGRESS_DOMAIN = "${env.stagingNamespace}.lead.sandbox.liatr.io"
+              INGRESS_DOMAIN   = "${env.stagingDomain}"
             }
             steps {
               container('skaffold') {
@@ -27,18 +26,19 @@ pipeline {
             }
         }
         stage ('Test Staging Deployment') {
+            agent {
+                label "lead-toolchain-maven"
+            }
             steps {
               container('maven') {
-                //sh "cd functional-tests && mvn clean test -DappUrl=${APP_URL}"
-                echo 'temp comment'
+                sh "mvn clean test -DappUrl=https://knowledge-share-app.${env.stagingDomain} -f functional-tests"
               }
             }
         }
         stage ('Deploy to Production') {
            environment {
              TILLER_NAMESPACE = "${env.productionNamespace}"
-             INGRESS_DOMAIN = "${env.productionDomain}"
-             //INGRESS_DOMAIN = "${env.productionNamespace}.lead.sandbox.liatr.io"
+             INGRESS_DOMAIN   = "${env.productionDomain}"
            }
             steps {
               container('skaffold') {
@@ -46,11 +46,6 @@ pipeline {
                   sh "skaffold deploy -a image.json -n ${TILLER_NAMESPACE}"
                 }
               }
-            }
-        }
-        stage ('Test Prod Deployment') {
-            steps {
-              echo 'Temp testing stage here'
             }
         }
     }
