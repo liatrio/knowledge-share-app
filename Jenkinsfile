@@ -35,18 +35,12 @@ pipeline {
         }
       }
     }
-    stage ('Approval') {
-      agent none
+    stage ('Deploy to Production') {
       when {
           branch 'master'
       }
       input {
           message "Deploy to production?"
-      }
-    }
-    stage ('Deploy to Production') {
-      when {
-          branch 'master'
       }
       agent {
         label "lead-toolchain-skaffold"
