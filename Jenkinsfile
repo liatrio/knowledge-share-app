@@ -31,12 +31,17 @@ pipeline {
         }
       }
     }
-    stage ('Deploy to Production') {
+    stage ('Approval') {
       when {
           branch 'master'
       }
       input {
           message "Deploy to production?"
+      }
+    }
+    stage ('Deploy to Production') {
+      when {
+          branch 'master'
       }
       environment {
         TILLER_NAMESPACE = "${env.productionNamespace}"
