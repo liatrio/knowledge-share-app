@@ -7,7 +7,7 @@ pipeline {
             steps {
               container('skaffold') {
                 script {
-                  sh "skaffold build"
+                  sh "skaffold build --quiet > image.json"
                 }
               }
             }
@@ -15,11 +15,14 @@ pipeline {
         stage ('Deploy to Staging') {
             environment { 
               TILLER_NAMESPACE = "${env.stagingNamespace}"
+              //INGRESS_DOMAIN = "${env.stagingDomain}"
+              INGRESS_DOMAIN = "${env.stagingNamespace}.lead.sandbox.liatr.io"
             }
             steps {
               container('skaffold') {
                 script {
-                  sh "skaffold deploy -n jon-test-staging"
+                  sh "skaffold deploy -a image.json"
+                //  sh "skaffold deploy -n ${TILLER_NAMESPACE}"
                 }
               }
             }
@@ -35,11 +38,13 @@ pipeline {
         stage ('Deploy to Production') {
            environment {
              TILLER_NAMESPACE = "${env.productionNamespace}"
+              //INGRESS_DOMAIN = "${env.productionDomain}"
+             INGRESS_DOMAIN = "${env.productionNamespace}.lead.sandbox.liatr.io"
            }
             steps {
               container('skaffold') {
                 script {
-                  sh "skaffold deploy"
+                  sh "skaffold deploy -a image.json"
                 }
               }
             }

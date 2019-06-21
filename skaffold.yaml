@@ -14,5 +14,7 @@ deploy:
       chartPath: charts/knowledge-share-app
       values:
         image: knowledge-share-app
+      setValueTemplates: 
+        ingress.domain: "{{.INGRESS_DOMAIN}}" 
     flags:
       global: ["--debug"]

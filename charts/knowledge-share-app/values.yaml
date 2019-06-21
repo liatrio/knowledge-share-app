@@ -1,6 +1,7 @@
 replicaCount: 1
 revisionHistoryLimit: 1
 
+
 image: knowledge-share-app:latest
 pullPolicy: IfNotPresent
 resources:
@@ -15,18 +16,17 @@ readinessProbe:
   initialDelaySeconds: 15
   periodSeconds: 5
 service:
-  type: NodePort
+  type: ClusterIP
   name: knowledge-share-app
   servicePort: 8080
 ingress:
-  enabled: false
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  paths: []
-  hosts:
-    - knowledge-share-app.local
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  enabled: true
+  domain: local
+  tls:
+    enabled: true
+    secretName: knowledge-share-app-ingress-tls
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
