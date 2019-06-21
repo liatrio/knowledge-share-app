@@ -21,6 +21,7 @@ pipeline {
         }
       }
     }
+    /*
     stage ('Test Staging Deployment') {
       agent {
           label "lead-toolchain-maven"
@@ -46,6 +47,6 @@ pipeline {
           //sh "skaffold deploy -a image.json -n ${TILLER_NAMESPACE}"
         }
       }
-    }
+    } */
   }
 }
